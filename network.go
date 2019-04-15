@@ -27,9 +27,9 @@ switch os.Args[1] {
 func enableCgroup() {
         cgroups := "/root/mygrp"
         pids := filepath.Join(cgroups, "child")
-       
+
         must(ioutil.WriteFile(filepath.Join(pids, "memory.max"), []byte("2M"), 0700))
-       
+
         must(ioutil.WriteFile(filepath.Join(pids, "cgroup.procs"), []byte(strconv.Itoa(os.Getpid())), 0700))
 }
 
@@ -121,7 +121,6 @@ func pivotRoot(newroot string) error {
 func parent() {
 
         cmd := exec.Command("/proc/self/exe", append([]string{"child"}, os.Args[2:]...)...)
-		
         cmd.Stdin = os.Stdin
         cmd.Stdout = os.Stdout
         cmd.Stderr = os.Stderr
